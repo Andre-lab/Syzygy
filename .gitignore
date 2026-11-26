@@ -221,3 +221,14 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Syzygy: artefacts written by training / sampling
+checkpoints/
+logs/
+outputs/
+wandb/
+lightning_logs/
+*.ckpt
+
+# Avoid syncing large training data files
+data/

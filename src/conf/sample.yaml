@@ -1,0 +1,43 @@
+# Hydra config for src/sample.py (sampling from a trained checkpoint).
+#
+# Examples:
+#   python src/sample.py checkpoint=checkpoints/last.ckpt output=samples.fasta n_sequences=1000
+#   python src/sample.py checkpoint=... output=... 'lengths=[230,250]'        # length-conditioned
+#   python src/sample.py checkpoint=... output=... 'labels=[green,yellow]'    # label-conditioned
+#   python src/sample.py checkpoint=... output=... 'lengths=[230,250]' 'labels=[green]'  # both
+defaults:
+  - override hydra/job_logging: colorlog_console
+  - override hydra/hydra_logging: colorlog
+  - _self_
+
+# Path to a .ckpt file written by src/train.py (required)
+checkpoint: ???
+# Output FASTA file (required)
+output: ???
+
+# Number of sequences per (length, label) combination
+n_sequences: 100
+# Target ungapped length(s). Required for length-conditioned models.
+lengths: null
+# Target label name(s), e.g. [green, yellow]. Required for label-conditioned models.
+# Valid names are those found in the training FASTA headers (stored in the checkpoint).
+labels: null
+# Override the sampling endpoint concentration stored in the checkpoint (null = keep)
+alpha_max: null
+seed: null
+# Torch device (null = cuda:0 if available, else cpu)
+device: null
+# Maximum sampling batch size (null = estimated from free GPU memory)
+max_batch_size: null
+# Write the generated alignment rows (with "-") instead of ungapped sequences
+keep_gaps: false
+# FASTA header prefix
+prefix: sample
+
+hydra:
+  # Do not create an outputs/ directory or write Hydra files for a sampling run
+  output_subdir: null
+  run:
+    dir: .
+  job:
+    chdir: false

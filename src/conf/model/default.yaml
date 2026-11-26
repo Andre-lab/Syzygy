@@ -1,0 +1,18 @@
+model: "transformer_adaln"
+prior_pseudocount: 2
+dropout: 0.2
+# Architecture
+num_layers: 4
+hidden_dim: 256
+num_heads: 8
+alpha_scale: 2
+# Sampling concentration endpoint
+alpha_max: 12
+flow_temp: 1.0
+num_integration_steps: 100
+use_length_conditioning: false
+use_label_conditioning: false
+# Loss weight of the gap character relative to amino acids (1 = unweighted).
+# Per-class weights in the cross-entropy loss; shows how other amino-acid biases
+# could be implemented.
+gap_weight: 1

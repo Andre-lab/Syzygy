@@ -1,0 +1,24 @@
+# @package hydra.job_logging
+# Colour-coded console logging only (same look as hydra-colorlog's "colorlog",
+# but without its log-file handler), used by src/sample.py.
+version: 1
+formatters:
+  colorlog:
+    '()': 'colorlog.ColoredFormatter'
+    format: '[%(cyan)s%(asctime)s%(reset)s][%(blue)s%(name)s%(reset)s][%(log_color)s%(levelname)s%(reset)s] - %(message)s'
+    log_colors:
+      DEBUG: purple
+      INFO: green
+      WARNING: yellow
+      ERROR: red
+      CRITICAL: red
+handlers:
+  console:
+    class: logging.StreamHandler
+    formatter: colorlog
+    stream: ext://sys.stdout
+root:
+  level: INFO
+  handlers: [console]
+
+disable_existing_loggers: false

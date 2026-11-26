@@ -1,0 +1,33 @@
+training:
+  batch_size: 128
+  grad_clip: 1.0
+  # Paper settings
+  max_epochs: 1000
+  lr: 5e-4
+  seed: 42
+  early_stopping_patience: 10
+  early_stopping: true
+  track_metric: "val/perplexity_epoch"
+  accelerator: auto
+  devices: auto
+  # Directory for checkpoints (best-by-track_metric and last.ckpt)
+  checkpoint_dir: ${log_dir}/checkpoints
+  # Path to a .ckpt file to resume training from (null = start from scratch)
+  resume_from: null
+
+data:
+  # Alphabet size: 20 amino acids + gap ("-") = 21 for aligned FASTA input.
+  alphabet_size: 21
+  num_workers: 4
+  batch_size: ${main.training.batch_size} # Reference training batch_size
+  # Path to the training MSA (aligned FASTA). Required; relative paths are resolved
+  # against the directory the command is launched from.
+  fasta_path: ???
+
+logging:
+  # WandB is an optional extra (`pip install syzygy[wandb]` / `uv sync --extra wandb`).
+  # When false, metrics are written with Lightning's CSVLogger.
+  wandb: false
+  wandb_project: Syzygy
+  # Upload checkpoints as WandB artifacts
+  wandb_log_model: false
